@@ -1,14 +1,114 @@
 package abd.tableau.iterative;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
+
+import net.sf.tweety.logics.pl.syntax.PropositionalFormula;
 
 public class IteGraph {
  
-	protected OrNode root = null;
-    protected Vector<AndNode> nodes = new Vector<AndNode>();
+	protected AONode root = null;
+    protected Vector<AONode> nodes = new Vector<AONode>();
     protected Vector<Edge> edges = new Vector<Edge>();
     protected boolean directed = false;
     protected boolean sortedNeighbors = false;
+    protected HashMap<PropositionalFormula, Vector<PropositionalFormula>> dict;
+    
+    public void constructTree(AONode node){
+    	// recursive method
+    	// In this way, we prioritize the depth of a branch
+    	if(!node.termination){
+    		if(node.status){
+    			System.out.println("and");
+    			// and node, disjunct literals are separated
+    			// create a  new node  for every literals 
+    			PropositionalFormula pf = node.getLiteral();
+    			System.out.println("root "+pf);
+    			if(!pf.isLiteral()){
+    				Set<PropositionalFormula> lits = pf.getLiterals();
+    				for(PropositionalFormula l : lits){
+    					
+    					AONode newnode = new AONode(l);
+    					newnode.setOrNode();
+
+    					if(node.getPredecessor()!= null && node.getPredecessor().getLiteral().equals(l.complement())){
+    						System.out.println("contradiction");
+    						newnode.setTermination();
+    					}
+    					newnode.setPredecessor(node);
+    					
+    					// new node copy the predecessor's rule list
+    					newnode.setAppliedRules(node.getAppliedRules());
+    					newnode.setLeftRules(node.getLeftRules());
+    					newnode.setRule(node.getRule());
+    					nodes.add(newnode);
+    					// add the edges between the parent and children
+    					Edge e = new Edge(node, newnode);
+    					edges.add(e);
+    					// recursive 
+    					constructTree(newnode);
+    				}
+    			}
+    		    
+    		}else{
+    			System.out.println("or");
+
+    			// or node, add new clause to the node 
+    			PropositionalFormula pf = node.getLiteral();
+    			if(pf.isLiteral()){
+    				PropositionalFormula comp_pf = (PropositionalFormula)pf.complement();
+    				Vector<PropositionalFormula> values= dict.get(comp_pf);
+    				if(values!=null){
+    					for(int i=0;i<values.size();i++){
+    						System.out.println("literal "+ pf +" in formula "+values.elementAt(i));
+    						PropositionalFormula rf = values.elementAt(i);
+    						System.out.println("selected formula" + rf);
+    						
+    						HashSet<PropositionalFormula> applied = node.getAppliedRules();
+    						for(PropositionalFormula ap : applied){
+    							System.out.println("applied rules " + ap);
+    						}
+    						
+    						if(node.getAppliedRules().contains(rf)){
+    							
+    							System.out.println("already applied");
+    							break;
+    							
+    						}
+    						// add every formula as a new alterantive node
+    						// set as and node
+    						AONode newnode = new AONode(values.elementAt(i));
+    						newnode.setRule(values.elementAt(i));
+        					newnode.setAndNode();
+
+        					newnode.setPredecessor(node);
+        					
+        					// new node copy the predecessor's rule list
+        					newnode.setAppliedRules(node.getAppliedRules());
+        					newnode.setLeftRules(node.getLeftRules());
+        					newnode.addAppliedRule(rf);
+        					newnode.deleteLeftRule(rf);
+        					newnode.setRule(node.getRule());
+        					
+        					// add the edges between the parent and children
+        					Edge e = new Edge(node, newnode);
+        					edges.add(e);
+        					
+        					
+        					nodes.add(newnode);
+        					// recursive 
+        					constructTree(newnode);
+    					}
+    				}else{
+    					node.setTermination();
+    				}
+    			}
+    		}
+    	}
+    }
      
     public double[][] getAdjacencyMatrix() {
         double[][] adjMatrix = new double[nodes.size()][nodes.size()];
@@ -21,7 +121,7 @@ public class IteGraph {
                     adjMatrix[i][j] = Double.POSITIVE_INFINITY;
                  
         for(int i = 0; i < nodes.size(); i++) {
-        	AndNode node = nodes.elementAt(i);
+        	AONode node = nodes.elementAt(i);
             //System.out.println("Current node: " + node);
              
             for(int j = 0; j < edges.size(); j++) {
@@ -66,7 +166,7 @@ public class IteGraph {
         return -1;
     }
      
-    public Vector<AndNode> getNodes() {
+    public Vector<AONode> getNodes() {
         return nodes;
     }
      
@@ -74,7 +174,7 @@ public class IteGraph {
         return edges;
     }
      
-    public AndNode getNodeAt(int i) {
+    public AONode getNodeAt(int i) {
         return nodes.elementAt(i);
     }
      
@@ -83,8 +183,8 @@ public class IteGraph {
             nodes.elementAt(i).unvisit();
     }
      
-    public Vector<AndNode> getNeighbors(AndNode a) {
-        Vector<AndNode> neighbors = new Vector<AndNode>();
+    public Vector<AONode> getNeighbors(AONode a) {
+        Vector<AONode> neighbors = new Vector<AONode>();
          
         for(int i = 0; i < edges.size(); i++) {
             Edge edge = edges.elementAt(i);
@@ -102,7 +202,7 @@ public class IteGraph {
         return neighbors;
     }
      
-    public int addNode(AndNode a) {
+    public int addNode(AONode a) {
         nodes.add(a);
          
         return nodes.size() - 1;
@@ -123,9 +223,68 @@ public class IteGraph {
         System.out.println(edges);
     }
 
-	public void setRoot(OrNode root) {
+	public void setRoot(AONode root) {
 		// TODO Auto-generated method stub
 		this.root = root;
+		nodes.addElement(root);
+	}
+
+	public void setLiteralMap(
+			HashMap<PropositionalFormula, Vector<PropositionalFormula>> dict) {
+		// TODO Auto-generated method stub
+		this.dict = dict;
+	}
+
+	public void startExpansion() {
+		// TODO Auto-generated method stub
+		constructTree(root);
+	}
+	
+	public void toDot(String filename){
+		try {
+			String content = "This is the content to write into file";
+
+			File file = new File("./output/"+filename+".dot");
+
+			// if file doesnt exists, then create it
+			if (!file.exists()) {
+				file.createNewFile();
+			}
+
+			FileWriter fw = new FileWriter(file.getAbsoluteFile());
+			BufferedWriter bw = new BufferedWriter(fw);
+			
+			//bw.write(content);
+			//print nodes information and edges information
+			for(int i =0;i<nodes.size();i++){
+				bw.write(Integer.toString(nodes.indexOf(nodes.elementAt(i)))+ "  " + "[label=\"" + nodes.elementAt(i).getLiteral().toString()+"\"];\n");
+			}
+			for(int j=0;j<edges.size();j++){
+				Edge e = edges.get(j);
+				int na = nodes.indexOf(e.a);
+				int nb = nodes.indexOf(e.b);
+				String se =e.a.getLiteral().toString();
+				String ee = e.b.getLiteral().toString();
+				String final_se = se.replace("||", "_or_").replace("!","n");
+				String final_ee = ee.replace("||", "_or_").replace("!","n");
+				//bw.write(Integer.toString(na).concat("_"+final_se)+ " -> " + Integer.toString(nb).concat("_"+final_ee));
+				bw.write(Integer.toString(na)+ " -> " + Integer.toString(nb));
+
+				// add conditions to separate dotted line and concrete line
+				if(!e.a.status)
+					bw.write(" [style = dotted];");
+				else
+					bw.write(";");
+				bw.write("\n");
+			}
+			
+			bw.close();
+
+			System.out.println("Done");
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
  
 }

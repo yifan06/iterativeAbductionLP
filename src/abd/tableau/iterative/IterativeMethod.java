@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.Vector;
 
+import scala.sys.Prop;
 import net.sf.tweety.commons.ParserException;
 import net.sf.tweety.logics.pl.PlBeliefSet;
 import net.sf.tweety.logics.pl.parser.PlParser;
@@ -27,7 +28,7 @@ public static void main(String[] args) throws ParserException, IOException{
 		// Parse observation formula 
 //		String observation="/home/yifan/obs.txt";
 //		PropositionalFormula obs = (PropositionalFormula) parser.parseFormulaFromFile(observation);
-		PropositionalFormula obs = (PropositionalFormula) parser.parseFormula("p6 && p3");
+		PropositionalFormula obs = (PropositionalFormula) parser.parseFormula("p2 && p3");
 		
 		// Set SAT solver
 		SatSolver.setDefaultSolver(new Sat4jSolver());
@@ -70,9 +71,30 @@ public static void main(String[] args) throws ParserException, IOException{
 		// Get current time
 		long start = System.currentTimeMillis();
 		
-//		IteGraph andortab = new IteGraph();
-//		OrNode root = new OrNode((PropositionalFormula)obs.complement());
-//		andortab.setRoot(root);
+		IteGraph andortab = new IteGraph();
+		PropositionalFormula obs_comp = (PropositionalFormula)obs.complement();
+		AONode root = new AONode(obs_comp.toNnf());
+		// set kb to root node
+		Set<PropositionalFormula> k = kb.toCnf().getFormulas();
+//		for(PropositionalFormula f : k){
+//			System.out.println("dnf: "+f);
+//		}
+		HashSet<PropositionalFormula> kbrules = new HashSet<PropositionalFormula>();
+		kbrules.addAll(k);
+		root.setLeftRules(kbrules);
+		root.setAndNode();
+		andortab.setRoot(root);
+		
+		andortab.setLiteralMap(dict);
+		andortab.startExpansion();
+		
+		andortab.toDot("test");
+		
+		
+		
+		System.out.println("finished");
+		
+		
 		
 	}
 

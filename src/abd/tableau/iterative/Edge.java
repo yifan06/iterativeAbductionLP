@@ -2,14 +2,14 @@ package abd.tableau.iterative;
 
 public class Edge {
 	 
-    protected AndNode a, b;
+    protected AONode a, b;
     protected double weight;
      
-    public Edge(AndNode a, AndNode b) {
+    public Edge(AONode a, AONode b) {
         this(a, b, Double.POSITIVE_INFINITY);
     }
      
-    public Edge(AndNode a, AndNode b, double weight) {
+    public Edge(AONode a, AONode b, double weight) {
         this.a = a;
         this.b = b;
         this.weight = weight;

@@ -1,0 +1,251 @@
+This is the content to write into file!p6||!p3--!p3  [style = dotted]
+!p3--!p3||p3
+!p3||p3--!p3  [style = dotted]
+!p3||p3--p3  [style = dotted]
+!p3--p0||p3||!p0
+p0||p3||!p0--p3  [style = dotted]
+p0||p3||!p0--p0  [style = dotted]
+p0||p3||!p0--!p0  [style = dotted]
+!p0--p0||!p1||!p8
+p0||!p1||!p8--!p8  [style = dotted]
+!p8--!p4||!p2||p8
+!p4||!p2||p8--p8  [style = dotted]
+!p4||!p2||p8--!p4  [style = dotted]
+!p4||!p2||p8--!p2  [style = dotted]
+!p2--p1||p0||p2
+p1||p0||p2--p2  [style = dotted]
+p1||p0||p2--p0  [style = dotted]
+p1||p0||p2--p1  [style = dotted]
+!p8--!p1||p8||!p5
+!p1||p8||!p5--p8  [style = dotted]
+!p1||p8||!p5--!p5  [style = dotted]
+!p5--p5||!p6||p7
+p5||!p6||p7--p7  [style = dotted]
+p5||!p6||p7--p5  [style = dotted]
+p5||!p6||p7--!p6  [style = dotted]
+!p1||p8||!p5--!p1  [style = dotted]
+!p1--p1||p0||p2
+p1||p0||p2--p2  [style = dotted]
+p2--!p4||!p2||p8
+!p4||!p2||p8--p8  [style = dotted]
+!p4||!p2||p8--!p4  [style = dotted]
+!p4||!p2||p8--!p2  [style = dotted]
+p2--p0||!p2||p3
+p0||!p2||p3--p3  [style = dotted]
+p3--!p3||p3
+!p3||p3--!p3  [style = dotted]
+!p3||p3--p3  [style = dotted]
+p0||!p2||p3--p0  [style = dotted]
+p0||!p2||p3--!p2  [style = dotted]
+p1||p0||p2--p0  [style = dotted]
+p1||p0||p2--p1  [style = dotted]
+!p1--p1||!p1
+p1||!p1--p1  [style = dotted]
+p1||!p1--!p1  [style = dotted]
+!p1--p1||p0||p2
+p1||p0||p2--p2  [style = dotted]
+p2--!p4||!p2||p8
+!p4||!p2||p8--p8  [style = dotted]
+!p4||!p2||p8--!p4  [style = dotted]
+!p4||!p2||p8--!p2  [style = dotted]
+p2--p0||!p2||p3
+p0||!p2||p3--p3  [style = dotted]
+p3--!p3||p3
+!p3||p3--!p3  [style = dotted]
+!p3||p3--p3  [style = dotted]
+p0||!p2||p3--p0  [style = dotted]
+p0||!p2||p3--!p2  [style = dotted]
+p1||p0||p2--p0  [style = dotted]
+p1||p0||p2--p1  [style = dotted]
+p0||!p1||!p8--p0  [style = dotted]
+p0||!p1||!p8--!p1  [style = dotted]
+!p1--p1||p0||p2
+p1||p0||p2--p2  [style = dotted]
+p2--!p4||!p2||p8
+!p4||!p2||p8--p8  [style = dotted]
+!p4||!p2||p8--!p4  [style = dotted]
+!p4||!p2||p8--!p2  [style = dotted]
+p2--p0||!p2||p3
+p0||!p2||p3--p3  [style = dotted]
+p3--!p3||p3
+!p3||p3--!p3  [style = dotted]
+!p3||p3--p3  [style = dotted]
+p0||!p2||p3--p0  [style = dotted]
+p0||!p2||p3--!p2  [style = dotted]
+p1||p0||p2--p0  [style = dotted]
+p1||p0||p2--p1  [style = dotted]
+!p1--p1||!p1
+p1||!p1--p1  [style = dotted]
+p1||!p1--!p1  [style = dotted]
+!p1--p1||p0||p2
+p1||p0||p2--p2  [style = dotted]
+p2--!p4||!p2||p8
+!p4||!p2||p8--p8  [style = dotted]
+!p4||!p2||p8--!p4  [style = dotted]
+!p4||!p2||p8--!p2  [style = dotted]
+p2--p0||!p2||p3
+p0||!p2||p3--p3  [style = dotted]
+p3--!p3||p3
+!p3||p3--!p3  [style = dotted]
+!p3||p3--p3  [style = dotted]
+p0||!p2||p3--p0  [style = dotted]
+p0||!p2||p3--!p2  [style = dotted]
+p1||p0||p2--p0  [style = dotted]
+p1||p0||p2--p1  [style = dotted]
+!p0--p1||p0||p2
+p1||p0||p2--p2  [style = dotted]
+p2--!p4||!p2||p8
+!p4||!p2||p8--p8  [style = dotted]
+p8--p0||!p1||!p8
+p0||!p1||!p8--!p8  [style = dotted]
+p0||!p1||!p8--p0  [style = dotted]
+p0||!p1||!p8--!p1  [style = dotted]
+!p4||!p2||p8--!p4  [style = dotted]
+!p4||!p2||p8--!p2  [style = dotted]
+p2--p0||!p2||p3
+p0||!p2||p3--p3  [style = dotted]
+p3--!p3||p3
+!p3||p3--!p3  [style = dotted]
+!p3||p3--p3  [style = dotted]
+p0||!p2||p3--p0  [style = dotted]
+p0||!p2||p3--!p2  [style = dotted]
+p1||p0||p2--p0  [style = dotted]
+p1||p0||p2--p1  [style = dotted]
+p1--p0||!p1||!p8
+p0||!p1||!p8--!p8  [style = dotted]
+!p8--!p4||!p2||p8
+!p4||!p2||p8--p8  [style = dotted]
+!p4||!p2||p8--!p4  [style = dotted]
+!p4||!p2||p8--!p2  [style = dotted]
+!p8--!p1||p8||!p5
+!p1||p8||!p5--p8  [style = dotted]
+!p1||p8||!p5--!p5  [style = dotted]
+!p5--p5||!p6||p7
+p5||!p6||p7--p7  [style = dotted]
+p5||!p6||p7--p5  [style = dotted]
+p5||!p6||p7--!p6  [style = dotted]
+!p1||p8||!p5--!p1  [style = dotted]
+p0||!p1||!p8--p0  [style = dotted]
+p0||!p1||!p8--!p1  [style = dotted]
+p1--p1||!p1
+p1||!p1--p1  [style = dotted]
+p1--p0||!p1||!p8
+p0||!p1||!p8--!p8  [style = dotted]
+!p8--!p4||!p2||p8
+!p4||!p2||p8--p8  [style = dotted]
+!p4||!p2||p8--!p4  [style = dotted]
+!p4||!p2||p8--!p2  [style = dotted]
+!p8--!p1||p8||!p5
+!p1||p8||!p5--p8  [style = dotted]
+!p1||p8||!p5--!p5  [style = dotted]
+!p5--p5||!p6||p7
+p5||!p6||p7--p7  [style = dotted]
+p5||!p6||p7--p5  [style = dotted]
+p5||!p6||p7--!p6  [style = dotted]
+!p1||p8||!p5--!p1  [style = dotted]
+p0||!p1||!p8--p0  [style = dotted]
+p0||!p1||!p8--!p1  [style = dotted]
+p1||!p1--!p1  [style = dotted]
+p1--!p1||p8||!p5
+!p1||p8||!p5--p8  [style = dotted]
+p8--p0||!p1||!p8
+p0||!p1||!p8--!p8  [style = dotted]
+p0||!p1||!p8--p0  [style = dotted]
+p0||!p1||!p8--!p1  [style = dotted]
+!p1||p8||!p5--!p5  [style = dotted]
+!p5--p5||!p6||p7
+p5||!p6||p7--p7  [style = dotted]
+p5||!p6||p7--p5  [style = dotted]
+p5||!p6||p7--!p6  [style = dotted]
+!p1||p8||!p5--!p1  [style = dotted]
+!p3--p0||!p2||p3
+p0||!p2||p3--p3  [style = dotted]
+p0||!p2||p3--p0  [style = dotted]
+p0--p0||p3||!p0
+p0||p3||!p0--p3  [style = dotted]
+p3--!p3||p3
+!p3||p3--!p3  [style = dotted]
+!p3||p3--p3  [style = dotted]
+p0||p3||!p0--p0  [style = dotted]
+p0||p3||!p0--!p0  [style = dotted]
+p0||!p2||p3--!p2  [style = dotted]
+!p2--p1||p0||p2
+p1||p0||p2--p2  [style = dotted]
+p1||p0||p2--p0  [style = dotted]
+p0--p0||p3||!p0
+p0||p3||!p0--p3  [style = dotted]
+p3--!p3||p3
+!p3||p3--!p3  [style = dotted]
+!p3||p3--p3  [style = dotted]
+p0||p3||!p0--p0  [style = dotted]
+p0||p3||!p0--!p0  [style = dotted]
+p1||p0||p2--p1  [style = dotted]
+p1--p0||!p1||!p8
+p0||!p1||!p8--!p8  [style = dotted]
+!p8--!p4||!p2||p8
+!p4||!p2||p8--p8  [style = dotted]
+!p4||!p2||p8--!p4  [style = dotted]
+!p4||!p2||p8--!p2  [style = dotted]
+!p8--!p1||p8||!p5
+!p1||p8||!p5--p8  [style = dotted]
+!p1||p8||!p5--!p5  [style = dotted]
+!p5--p5||!p6||p7
+p5||!p6||p7--p7  [style = dotted]
+p5||!p6||p7--p5  [style = dotted]
+p5||!p6||p7--!p6  [style = dotted]
+!p1||p8||!p5--!p1  [style = dotted]
+p0||!p1||!p8--p0  [style = dotted]
+p0--p0||p3||!p0
+p0||p3||!p0--p3  [style = dotted]
+p3--!p3||p3
+!p3||p3--!p3  [style = dotted]
+!p3||p3--p3  [style = dotted]
+p0||p3||!p0--p0  [style = dotted]
+p0||p3||!p0--!p0  [style = dotted]
+p0||!p1||!p8--!p1  [style = dotted]
+p1--p1||!p1
+p1||!p1--p1  [style = dotted]
+p1--p0||!p1||!p8
+p0||!p1||!p8--!p8  [style = dotted]
+!p8--!p4||!p2||p8
+!p4||!p2||p8--p8  [style = dotted]
+!p4||!p2||p8--!p4  [style = dotted]
+!p4||!p2||p8--!p2  [style = dotted]
+!p8--!p1||p8||!p5
+!p1||p8||!p5--p8  [style = dotted]
+!p1||p8||!p5--!p5  [style = dotted]
+!p5--p5||!p6||p7
+p5||!p6||p7--p7  [style = dotted]
+p5||!p6||p7--p5  [style = dotted]
+p5||!p6||p7--!p6  [style = dotted]
+!p1||p8||!p5--!p1  [style = dotted]
+p0||!p1||!p8--p0  [style = dotted]
+p0--p0||p3||!p0
+p0||p3||!p0--p3  [style = dotted]
+p3--!p3||p3
+!p3||p3--!p3  [style = dotted]
+!p3||p3--p3  [style = dotted]
+p0||p3||!p0--p0  [style = dotted]
+p0||p3||!p0--!p0  [style = dotted]
+p0||!p1||!p8--!p1  [style = dotted]
+p1||!p1--!p1  [style = dotted]
+p1--!p1||p8||!p5
+!p1||p8||!p5--p8  [style = dotted]
+p8--p0||!p1||!p8
+p0||!p1||!p8--!p8  [style = dotted]
+p0||!p1||!p8--p0  [style = dotted]
+p0--p0||p3||!p0
+p0||p3||!p0--p3  [style = dotted]
+p3--!p3||p3
+!p3||p3--!p3  [style = dotted]
+!p3||p3--p3  [style = dotted]
+p0||p3||!p0--p0  [style = dotted]
+p0||p3||!p0--!p0  [style = dotted]
+p0||!p1||!p8--!p1  [style = dotted]
+!p1||p8||!p5--!p5  [style = dotted]
+!p5--p5||!p6||p7
+p5||!p6||p7--p7  [style = dotted]
+p5||!p6||p7--p5  [style = dotted]
+p5||!p6||p7--!p6  [style = dotted]
+!p1||p8||!p5--!p1  [style = dotted]
+!p6||!p3--!p6  [style = dotted]

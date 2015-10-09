@@ -1,0 +1,6 @@
+digraph G {
+main -> xx;
+main -> yy;
+yy -> zz;
+}
+
