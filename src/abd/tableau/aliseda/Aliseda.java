@@ -19,13 +19,14 @@ public class Aliseda {
 		// Create a pl knowledge base
 		PlParser parser = new PlParser();
 //		String file="/home/yifan/plkb.txt";
-		String file="/home/yifan/workspace_eclipse/iterativeTab/kbset/generator_5_5/generator9.txt";
+		String file="/home/yifan/plkb_sec.txt";
+//		String file="/home/yifan/workspace_eclipse/iterativeTab/kbset/generator_5_5/generator9.txt";
 		PlBeliefSet kb = parser.parseBeliefBaseFromFile(file);
 		
 		// Parse observation formula 
 //		String observation="/home/yifan/obs.txt";
 //		PropositionalFormula obs = (PropositionalFormula) parser.parseFormulaFromFile(observation);
-		PropositionalFormula obs = (PropositionalFormula) parser.parseFormula("p6 && p3");
+		PropositionalFormula obs = (PropositionalFormula) parser.parseFormula("!e && f");
 		
 		// Set SAT solver
 		SatSolver.setDefaultSolver(new Sat4jSolver());

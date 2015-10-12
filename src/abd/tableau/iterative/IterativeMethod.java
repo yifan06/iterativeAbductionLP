@@ -1,6 +1,7 @@
 package abd.tableau.iterative;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -21,14 +22,15 @@ public static void main(String[] args) throws ParserException, IOException{
 		
 		// Create a pl knowledge base
 		PlParser parser = new PlParser();
-//		String file="/home/yifan/plkb.txt";
-		String file="/home/yifan/workspace_eclipse/iterativeTab/kbset/generator_5_5/generator9.txt";
+		String file="/home/yifan/plkb.txt";
+		//		String file="/home/yifan/plkb_sec.txt";
+		//		String file="/home/yifan/workspace_eclipse/iterativeTab/kbset/generator_5_5/generator9.txt";
 		PlBeliefSet kb = parser.parseBeliefBaseFromFile(file);
 		
 		// Parse observation formula 
 //		String observation="/home/yifan/obs.txt";
 //		PropositionalFormula obs = (PropositionalFormula) parser.parseFormulaFromFile(observation);
-		PropositionalFormula obs = (PropositionalFormula) parser.parseFormula("p2 && p3");
+		PropositionalFormula obs = (PropositionalFormula) parser.parseFormula("w && d");
 		
 		// Set SAT solver
 		SatSolver.setDefaultSolver(new Sat4jSolver());
@@ -87,14 +89,27 @@ public static void main(String[] args) throws ParserException, IOException{
 		
 		andortab.setLiteralMap(dict);
 		andortab.startExpansion();
+		andortab.generateExplanation();
+		
+		ArrayList<PropositionalFormula> explanation = new ArrayList<PropositionalFormula>();
+		explanation = andortab.getExplanations();
+		if(explanation.isEmpty()){
+			System.out.println("no explanations");
+		}else{
+			Iterator<PropositionalFormula> it_exp = explanation.iterator();
+			while(it_exp.hasNext()){
+				System.out.println("explanation is: "+ it_exp.next());
+			}
+		}
+		
+		
+		
 		
 		andortab.toDot("test");
 		
 		
 		
 		System.out.println("finished");
-		
-		
 		
 	}
 

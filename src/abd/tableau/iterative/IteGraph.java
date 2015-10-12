@@ -16,6 +16,7 @@ public class IteGraph {
     protected boolean directed = false;
     protected boolean sortedNeighbors = false;
     protected HashMap<PropositionalFormula, Vector<PropositionalFormula>> dict;
+    protected ArrayList<PropositionalFormula> hypotheses;
     
     public void constructTree(AONode node){
     	// recursive method
@@ -27,6 +28,9 @@ public class IteGraph {
     			// create a  new node  for every literals 
     			PropositionalFormula pf = node.getLiteral();
     			System.out.println("root "+pf);
+    			
+    			//ArrayList<AONode> sib = new ArrayList<AONode>();
+    			
     			if(!pf.isLiteral()){
     				Set<PropositionalFormula> lits = pf.getLiterals();
     				for(PropositionalFormula l : lits){
@@ -40,10 +44,22 @@ public class IteGraph {
     					}
     					newnode.setPredecessor(node);
     					
+    					
     					// new node copy the predecessor's rule list
     					newnode.setAppliedRules(node.getAppliedRules());
     					newnode.setLeftRules(node.getLeftRules());
     					newnode.setRule(node.getRule());
+    					
+    					// new node copy the model and hypotheses
+    					newnode.copyModel(node.getModel());
+    					if(!newnode.updateModel()){
+    						newnode.setTermination();
+    					}
+    					// model is the complement of the literals that appear in  a node
+    					// considering sibling node
+    					//sib.
+    					
+    					node.setChildren(newnode);
     					nodes.add(newnode);
     					// add the edges between the parent and children
     					Edge e = new Edge(node, newnode);
@@ -86,6 +102,7 @@ public class IteGraph {
 
         					newnode.setPredecessor(node);
         					
+        					
         					// new node copy the predecessor's rule list
         					newnode.setAppliedRules(node.getAppliedRules());
         					newnode.setLeftRules(node.getLeftRules());
@@ -93,6 +110,10 @@ public class IteGraph {
         					newnode.deleteLeftRule(rf);
         					newnode.setRule(node.getRule());
         					
+        					// new node copy the model and hypotheses
+        					newnode.copyModel(node.getModel());
+        					
+        					node.setChildren(newnode);
         					// add the edges between the parent and children
         					Edge e = new Edge(node, newnode);
         					edges.add(e);
@@ -285,6 +306,45 @@ public class IteGraph {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void generateExplanation(){
+		hypotheses = new ArrayList<PropositionalFormula>();
+		// using breadth first search to generate sub tree		
+		// generate minimal semantic explanations.
+		topdownHyp(root);
+		
+		
+		// generate minimal syntatic explanations
+		
+	}
+
+	private void topdownHyp(AONode node) {
+		// TODO Auto-generated method stub
+		// to do rewritten using java Queue
+		// or node, list all possible hyps
+		if(node.status==false){
+			node.copyHyp();
+		}else{
+		// and node, combination of complement of each literals
+			ArrayList<AONode> ch = node.getChildren();
+			Iterator<AONode> it = ch.iterator();
+			PropositionalFormula h = null;
+			while(it.hasNext()){
+				AONode anode = it.next();
+				if(!anode.termination)
+					h.combineWithAnd(anode.getLiteral().complement());
+			}
+			node.setHyp(h);
+		}
+		// todo update the hypotheses in the same level
+		// fusion the model to check the consistency of the hypotheses.
+		// 
+	}
+
+	public ArrayList<PropositionalFormula> getExplanations() {
+		// TODO Auto-generated method stub
+		return hypotheses;
 	}
  
 }
