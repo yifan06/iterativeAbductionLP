@@ -14,6 +14,7 @@ import net.sf.tweety.logics.pl.PlBeliefSet;
 import net.sf.tweety.logics.pl.parser.PlParser;
 import net.sf.tweety.logics.pl.sat.Sat4jSolver;
 import net.sf.tweety.logics.pl.sat.SatSolver;
+import net.sf.tweety.logics.pl.syntax.Conjunction;
 import net.sf.tweety.logics.pl.syntax.PropositionalFormula;
 
 public class IterativeMethod {
@@ -22,8 +23,8 @@ public static void main(String[] args) throws ParserException, IOException{
 		
 		// Create a pl knowledge base
 		PlParser parser = new PlParser();
-		String file="/home/yifan/plkb.txt";
-		//		String file="/home/yifan/plkb_sec.txt";
+		//		String file="/home/yifan/plkb.txt";
+		String file="/home/yifan/plkb_sec.txt";
 		//		String file="/home/yifan/workspace_eclipse/iterativeTab/kbset/generator_5_5/generator9.txt";
 		PlBeliefSet kb = parser.parseBeliefBaseFromFile(file);
 		
@@ -43,6 +44,10 @@ public static void main(String[] args) throws ParserException, IOException{
 			System.exit(0);
 		}
 		kb = new PlBeliefSet(kb.toCnf());
+		
+		
+		// Get current time
+		long start = System.currentTimeMillis();
 		
 		HashMap<PropositionalFormula, Vector<PropositionalFormula>> dict = new HashMap<PropositionalFormula, Vector<PropositionalFormula>>();
 		Iterator<PropositionalFormula> it = kb.iterator();
@@ -70,8 +75,8 @@ public static void main(String[] args) throws ParserException, IOException{
 			}
 		}
 		
-		// Get current time
-		long start = System.currentTimeMillis();
+//		// Get current time
+//		long start = System.currentTimeMillis();
 		
 		IteGraph andortab = new IteGraph();
 		PropositionalFormula obs_comp = (PropositionalFormula)obs.complement();
@@ -91,18 +96,25 @@ public static void main(String[] args) throws ParserException, IOException{
 		andortab.startExpansion();
 		andortab.generateExplanation();
 		
-		ArrayList<PropositionalFormula> explanation = new ArrayList<PropositionalFormula>();
+		ArrayList<Conjunction> explanation = new ArrayList<Conjunction>();
 		explanation = andortab.getExplanations();
 		if(explanation.isEmpty()){
 			System.out.println("no explanations");
 		}else{
-			Iterator<PropositionalFormula> it_exp = explanation.iterator();
+			Iterator<Conjunction> it_exp = explanation.iterator();
 			while(it_exp.hasNext()){
 				System.out.println("explanation is: "+ it_exp.next());
 			}
 		}
 		
+		// Get elapsed time in milliseconds
+		long elapsedTimeMillis = System.currentTimeMillis()-start;
 		
+		// Get elapsed time in seconds
+		float elapsedTimeSec = elapsedTimeMillis/1000F;
+		
+		System.out.println("elapsedTimeSec " +elapsedTimeSec);
+		System.out.println("Finish");
 		
 		
 		andortab.toDot("test");

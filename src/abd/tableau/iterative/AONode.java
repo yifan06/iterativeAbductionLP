@@ -171,7 +171,7 @@ public class AONode implements Comparable<AONode> {
 
 	public void setHyp(PropositionalFormula h) {
 		// TODO Auto-generated method stub
-		hyps.put(h, f);
+		hyps.put(f, h);
 	}
 
 	public void copyHyp() {
@@ -179,4 +179,7 @@ public class AONode implements Comparable<AONode> {
 		this.hyps = predecessor.hyps;
 	}
      
+	public HashMap<PropositionalFormula, PropositionalFormula> getHyp(){
+		return hyps;
+	}
 }

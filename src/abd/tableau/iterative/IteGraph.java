@@ -6,6 +6,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
+import scala.Array;
+import net.sf.tweety.logics.pl.syntax.Conjunction;
 import net.sf.tweety.logics.pl.syntax.PropositionalFormula;
 
 public class IteGraph {
@@ -17,6 +19,9 @@ public class IteGraph {
     protected boolean sortedNeighbors = false;
     protected HashMap<PropositionalFormula, Vector<PropositionalFormula>> dict;
     protected ArrayList<PropositionalFormula> hypotheses;
+    protected ArrayList<Conjunction> hypotheses_bis;
+    
+	protected HashSet<PropositionalFormula> fusion_model = new HashSet<PropositionalFormula>();
     
     public void constructTree(AONode node){
     	// recursive method
@@ -313,9 +318,11 @@ public class IteGraph {
 		// using breadth first search to generate sub tree		
 		// generate minimal semantic explanations.
 		topdownHyp(root);
-		
-		
 		// generate minimal syntatic explanations
+        oneStepGeneration(root);
+		
+		
+
 		
 	}
 
@@ -323,28 +330,106 @@ public class IteGraph {
 		// TODO Auto-generated method stub
 		// to do rewritten using java Queue
 		// or node, list all possible hyps
-		if(node.status==false){
-			node.copyHyp();
-		}else{
-		// and node, combination of complement of each literals
-			ArrayList<AONode> ch = node.getChildren();
-			Iterator<AONode> it = ch.iterator();
-			PropositionalFormula h = null;
-			while(it.hasNext()){
-				AONode anode = it.next();
-				if(!anode.termination)
-					h.combineWithAnd(anode.getLiteral().complement());
+		ArrayList<AONode> ch = node.getChildren();
+		if(ch!=null && ch.size()>0){
+			if(node.status==false){
+				Iterator<AONode> it = ch.iterator();
+				while(it.hasNext()){
+					AONode anode = it.next();
+					if(!anode.termination){
+						anode.copyHyp();
+						topdownHyp(anode);
+					}
+				}
+			}else{
+			// and node, combination of complement of each literals
+
+				Iterator<AONode> it = ch.iterator();
+				Conjunction h = new Conjunction();
+				while(it.hasNext()){
+					AONode anode = it.next();
+					if(!anode.termination)
+						h.add((PropositionalFormula) anode.getLiteral().complement());
+					topdownHyp(anode);
+				}
+				node.setHyp(h);
+
 			}
-			node.setHyp(h);
 		}
+
 		// todo update the hypotheses in the same level
 		// fusion the model to check the consistency of the hypotheses.
 		// 
+		
 	}
+	
+	//todo rewrite the generation part using minimal hitting set algo
+	
+	public void oneStepGeneration(AONode node){
+		ArrayList<AONode> ch_root = node.getChildren();
+		Iterator<AONode> it_ch = ch_root.iterator();
+		int nb_obs = root.getLiteral().getLiterals().size();
+		Vector<List<Conjunction>> conj = new Vector<List<Conjunction>>(nb_obs);
+		int i=0;
+		ArrayList<AONode> children_list = new ArrayList<AONode>();
+		while(it_ch.hasNext()){
+			AONode ch_node = it_ch.next();
+			children_list.add(ch_node);
+			if(ch_node.termination == true){
+				ArrayList<Conjunction> ac = new ArrayList<Conjunction>();
+				Conjunction c = new Conjunction();
+				c.add((PropositionalFormula) ch_node.getLiteral().complement());
+				ac.add(c);
+				//conj.add(i, ac);
+			}
+			i++;
+			fusion_model.addAll(ch_node.getModel());
+		}
+		
+		for(AONode n : children_list){
+			ArrayList<AONode> grandchildren = n.getChildren();
+			if( grandchildren !=null){
+				Iterator<AONode> it_gc = grandchildren.iterator();
+				while(it_gc.hasNext()){
+					AONode gc = it_gc.next();
+					HashMap<PropositionalFormula, PropositionalFormula> h_gc = gc.getHyp();
+					if(!h_gc.isEmpty() && h_gc != null){
+					Set<PropositionalFormula> hyp_gc = new HashSet<PropositionalFormula>(h_gc.values());
+					ArrayList<Conjunction> h = new ArrayList<Conjunction>();
+					for(PropositionalFormula f : hyp_gc){
+						Conjunction c = new Conjunction(f.getLiterals());
+						h.add(c);
+					}
+					conj.add(h);
+					}
+				}
+			}
+		}
+		ArrayList<Conjunction> result = new ArrayList<Conjunction>();
+		Conjunction current = new Conjunction();
+		GeneratePermutations(conj, result, 0, current);
+		hypotheses_bis = result;
+	}
+	
+	
+	public void GeneratePermutations(Vector<List<Conjunction>> Lists, List<Conjunction> result, int depth, Conjunction current)
+	{
+	    if(depth == Lists.size())
+	    {
+	       result.add(current);
+	       return;
+	     }
 
-	public ArrayList<PropositionalFormula> getExplanations() {
+	    for(int i = 0; i < Lists.get(depth).size(); ++i)
+	    {
+	        GeneratePermutations(Lists, result, depth + 1, current.combineWithAnd(Lists.get(depth).get(i)));
+	    }
+	}
+	
+
+	public ArrayList<Conjunction> getExplanations() {
 		// TODO Auto-generated method stub
-		return hypotheses;
+		return hypotheses_bis;
 	}
  
 }
