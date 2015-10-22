@@ -55,7 +55,7 @@ public class AlisedaTableau{
 
 		while(!unusedFormula.isEmpty()){			
 			PropositionalFormula f = unusedFormula.firstElement();
-			System.out.println("apply the axiom " + f);
+			//System.out.println("apply the axiom " + f);
 			model.expansion(f);
 			usedFormula.addElement(f);
 			unusedFormula.remove(f);
@@ -83,38 +83,81 @@ public class AlisedaTableau{
 
 	public Vector<PropositionalFormula>  getMiniamlExplantion(Vector<PropositionalFormula> hyp ) {
 		// TODO Auto-generated method stub
+		
+		// test consistency
 		Vector<PropositionalFormula> minimal = new Vector<PropositionalFormula>();
 		SatSolver mysolver = new Sat4jSolver();
+		System.out.println("hyp.size "+ hyp.size());
 		for(int i=hyp.size()-1;i>=0;i--){
 			PropositionalFormula f = hyp.elementAt(i);
+			System.out.println("hyp "+ i +" "+ f);
 			Conjunction c = new Conjunction(f.getLiterals());
 			Conjunction o = new Conjunction(obs.getLiterals());
 			PropositionalFormula irr = c.combineWithAnd(o.complement());
 			if(c.getLiterals().containsAll(o.getLiterals())|| o.getLiterals().containsAll(c.getLiterals())){
-				System.out.println("irrelevant hyp: "+ hyp.get(i));
+				//System.out.println("irrelevant hyp: "+ hyp.get(i));
 				hyp.remove(i);
 				continue;
 			}
 			
 			if(!mysolver.isConsistent((PropositionalFormula)irr)){
-				System.out.println("irrelevant hyp: "+ hyp.get(i));
+				//System.out.println("irrelevant hyp: "+ hyp.get(i));
 				hyp.remove(i);
 				continue;
 			}
 			PlBeliefSet test = new PlBeliefSet(kb);
 			test.add(hyp.get(i));
 			if(!mysolver.isConsistent(test)){
-				System.out.println("inconsistent hyp: "+ hyp.get(i));
+				//System.out.println("inconsistent hyp: "+ hyp.get(i));
 				hyp.remove(i);
 				continue;
 			}
 		}
 		
+		// remove hypotheses with observation literals if not all hyp has observation literals
+		boolean all_intersection = true;
+		Set<PropositionalFormula> obs_lits = obs.getLiterals();
+		for(int i= 0; i < hyp.size(); i++){
+			PropositionalFormula f = hyp.elementAt(i);
+			Iterator<PropositionalFormula> it = obs_lits.iterator();
+			boolean flag = false;
+			while(it.hasNext()){
+				PropositionalFormula obs_part = it.next();
+				if(f.getLiterals().contains(obs_part)){
+					flag = true;
+				}
+			}
+			if(!flag){
+				all_intersection = false;
+				break;
+			}
+		}
+		
+		System.out.println("intersection "+ all_intersection);
+		if(!all_intersection){
+			for(int i= hyp.size()-1; i >= 0; i--){
+				PropositionalFormula f = hyp.elementAt(i);
+				Iterator<PropositionalFormula> it = obs_lits.iterator();
+				while(it.hasNext()){
+					PropositionalFormula obs_part = it.next();
+					if(f.getLiterals().contains(obs_part)){
+						hyp.removeElementAt(i);
+						break;
+					}
+				}
+			}
+		}
 		
 		loop1:
 		for(int i =0; i<hyp.size();i++){
 			PropositionalFormula f = hyp.elementAt(i);
 			Conjunction c = new Conjunction(f.getLiterals());
+			
+
+			if(i==hyp.size()-1){
+				minimal.add(c);
+				break loop1;
+			}else{
 ////			if(minimal.size()==0)
 ////				minimal.add(c);
 //			Conjunction o = new Conjunction(obs.getLiterals());
@@ -133,11 +176,13 @@ public class AlisedaTableau{
 //				continue;
 //			}
 //			kb.add(c);
-			if(mysolver.isConsistent(kb)){
+//			if(mysolver.isConsistent(kb)){
 //				kb.remove(c);
+				loop2:
 				for(int j=hyp.size()-1; j>i; j--){
 					PropositionalFormula fc = hyp.elementAt(j);
-					Conjunction fcc = new Conjunction(fc.getSignature());
+//					Conjunction fcc = new Conjunction(fc.getSignature());
+					Conjunction fcc = new Conjunction(fc.getLiterals());
 					PropositionalFormula sub1= c.combineWithAnd(fcc.complement());
 //					System.out.println(i+" "+ j+" sub1 "+sub1);
 					PropositionalFormula sub2= fcc.combineWithAnd(c.complement());
@@ -150,7 +195,9 @@ public class AlisedaTableau{
 							kb.remove(sub2);
 						}else{
 							kb.remove(sub2);
-							break loop1;
+							hyp.removeElementAt(i);
+							i--;
+							break loop2;
 						}
 					}else{
 						kb.remove(sub1);
@@ -162,10 +209,15 @@ public class AlisedaTableau{
 							kb.remove(sub2);
 						}
 					}
+					if(j==i+1){
+						minimal.add(c);
+						//break loop2;
+					}
 				}
-				minimal.add(c);
-			}else
-				System.out.println(hyp.elementAt(i));
+			}
+
+//			}else
+//				System.out.println(hyp.elementAt(i));
 //			kb.remove(hyp.elementAt(i));
 //			loop:
 //				System.out.println("a break");

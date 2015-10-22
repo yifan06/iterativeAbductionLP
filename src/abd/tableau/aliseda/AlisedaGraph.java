@@ -57,7 +57,7 @@ public class AlisedaGraph extends Graph{
 	public void expansion(PropositionalFormula pf){
 		// get all leave nodes
 		Vector<AlisedaNode> leaves = getAllLeaves();
-		System.out.println("leaves size: "+ leaves.size());
+		//System.out.println("leaves size: "+ leaves.size());
 		
 		for(int i=0; i< leaves.size(); i++){
 			

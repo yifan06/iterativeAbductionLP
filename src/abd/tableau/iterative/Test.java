@@ -84,8 +84,9 @@ public static void main(String[] args) throws ParserException, IOException{
 	System.out.println("knowledge base is "+ kb.isConsistent()+" consistent");
 	
 	PropositionalFormula oa = (PropositionalFormula) parser.parseFormula("s");
+	PropositionalFormula od = (PropositionalFormula) parser.parseFormula("!s");
 	PropositionalFormula ob = (PropositionalFormula) parser.parseFormula("d || c");
-	PropositionalFormula oc = (PropositionalFormula) parser.parseFormula("d || c");
+	PropositionalFormula oc = (PropositionalFormula) parser.parseFormula("d || ! c");
 	Conjunction c =new Conjunction();
 	Conjunction d =new Conjunction();
 //	d.addAll(oc.getLiterals());
@@ -93,6 +94,13 @@ public static void main(String[] args) throws ParserException, IOException{
 	c.add(oa);
 	d.add(oc);	
 	d.add(ob);
+	
+	System.out.println("hashcode " + oa + " : " + oa.hashCode());
+	System.out.println("hashcode " + od + " : " + od.hashCode());
+	System.out.println("hashcode " + ob + " : " + ob.hashCode());
+	System.out.println("hashcode " + oc + " : " + oc.complement().hashCode());
+	System.out.println("signature " + oc + " : " + oc.getSignature());
+
 	
 	
 	//	PropositionalFormula od;

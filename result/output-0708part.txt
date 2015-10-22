@@ -1,0 +1,28 @@
+2
+nodes size: 1249
+open branch size: 388
+elapsedTimeSec 894.307
+Finish
+3
+nodes size: 1104
+open branch size: 194
+elapsedTimeSec 452.005
+Finish
+4
+nodes size: 895
+open branch size: 228
+elapsedTimeSec 544.243
+Finish
+5
+nodes size: 2413
+open branch size: 703
+elapsedTimeSec 2307.204
+Finish
+6
+nodes size: 2875
+open branch size: 1041
+elapsedTimeSec 2702.814
+Finish
+7
+nodes size: 5220
+open branch size: 1669

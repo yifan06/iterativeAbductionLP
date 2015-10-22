@@ -1,0 +1,123 @@
+27.222
+50.194
+87.1
+6.236
+55.511
+39.951
+37.508
+24.003
+52.106
+51.969
+28.716
+23.079
+57.688
+135.612
+16.81
+43.21
+13.943
+112.762
+74.185
+75.086
+mean time 50.64455
+
+0
+nodes size: 192
+open branch size: 56
+elapsedTimeSec 27.222
+Finish
+1
+nodes size: 384
+open branch size: 156
+elapsedTimeSec 50.194
+Finish
+2
+nodes size: 393
+open branch size: 140
+elapsedTimeSec 87.1
+Finish
+3
+nodes size: 86
+open branch size: 22
+elapsedTimeSec 6.236
+Finish
+4
+nodes size: 141
+open branch size: 54
+elapsedTimeSec 55.511
+Finish
+5
+nodes size: 184
+open branch size: 48
+elapsedTimeSec 39.951
+Finish
+6
+nodes size: 137
+open branch size: 31
+elapsedTimeSec 37.508
+Finish
+7
+nodes size: 119
+open branch size: 28
+elapsedTimeSec 24.003
+Finish
+8
+nodes size: 168
+open branch size: 62
+elapsedTimeSec 52.106
+Finish
+9
+nodes size: 176
+open branch size: 67
+elapsedTimeSec 51.969
+Finish
+10
+nodes size: 81
+open branch size: 26
+elapsedTimeSec 28.716
+Finish
+11
+nodes size: 306
+open branch size: 68
+elapsedTimeSec 23.079
+Finish
+12
+nodes size: 138
+open branch size: 47
+elapsedTimeSec 57.688
+Finish
+13
+nodes size: 402
+open branch size: 198
+elapsedTimeSec 135.612
+Finish
+14
+nodes size: 85
+open branch size: 18
+elapsedTimeSec 16.81
+Finish
+15
+nodes size: 204
+open branch size: 54
+elapsedTimeSec 43.21
+Finish
+16
+nodes size: 104
+open branch size: 19
+elapsedTimeSec 13.943
+Finish
+17
+nodes size: 348
+open branch size: 152
+elapsedTimeSec 112.762
+Finish
+18
+nodes size: 305
+open branch size: 75
+elapsedTimeSec 74.185
+Finish
+19
+nodes size: 267
+open branch size: 96
+elapsedTimeSec 75.086
+Finish
+
