@@ -85,8 +85,8 @@ public static void main(String[] args) throws ParserException, IOException{
 	
 	PropositionalFormula oa = (PropositionalFormula) parser.parseFormula("s");
 	PropositionalFormula od = (PropositionalFormula) parser.parseFormula("!s");
-	PropositionalFormula ob = (PropositionalFormula) parser.parseFormula("d || c");
-	PropositionalFormula oc = (PropositionalFormula) parser.parseFormula("d || ! c");
+	PropositionalFormula ob = (PropositionalFormula) parser.parseFormula("d||c");
+	PropositionalFormula oc = (PropositionalFormula) parser.parseFormula("d||! c");
 	Conjunction c =new Conjunction();
 	Conjunction d =new Conjunction();
 //	d.addAll(oc.getLiterals());

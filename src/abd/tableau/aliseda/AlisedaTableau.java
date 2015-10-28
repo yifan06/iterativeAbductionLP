@@ -158,26 +158,6 @@ public class AlisedaTableau{
 				minimal.add(c);
 				break loop1;
 			}else{
-////			if(minimal.size()==0)
-////				minimal.add(c);
-//			Conjunction o = new Conjunction(obs.getLiterals());
-////			System.out.println("hyp " +  c);
-////			System.out.println("obs " + o);
-//			PropositionalFormula irr = o.combineWithAnd(c.complement());
-////			Conjunction irr = new Conjunction();
-////			irr.add((PropositionalFormula) c.complement());
-////			irr.add(o);
-//			if(!mysolver.isConsistent((PropositionalFormula)irr)){
-//				System.out.println("irrelevant hyp: "+ hyp.get(i));
-//				continue;
-//			}
-//			if(f.getLiterals().contains("w")){
-//				System.out.println("observation contains yes");
-//				continue;
-//			}
-//			kb.add(c);
-//			if(mysolver.isConsistent(kb)){
-//				kb.remove(c);
 				loop2:
 				for(int j=hyp.size()-1; j>i; j--){
 					PropositionalFormula fc = hyp.elementAt(j);
@@ -215,12 +195,6 @@ public class AlisedaTableau{
 					}
 				}
 			}
-
-//			}else
-//				System.out.println(hyp.elementAt(i));
-//			kb.remove(hyp.elementAt(i));
-//			loop:
-//				System.out.println("a break");
 		}
 		return minimal;
 	}
@@ -231,7 +205,6 @@ public class AlisedaTableau{
 //		int numOpenset = leaves.size();
 //		for(int i=0; i<numOpenset; i++){
 //			AlisedaNode n = leaves.elementAt(i);
-//			
 //		}
 		
 //		for(int i=0; i<leaves.size(); i++){
@@ -239,7 +212,6 @@ public class AlisedaTableau{
 //			leaves.elementAt(i).printleaves();
 //			AlisedaNode n = leaves.elementAt(i);
 //			Vector<PropositionalFormula> candidates = n.getLiterals();
-//		
 //		}
 		
 		// get the minimal hitting set from the leave nodes
@@ -284,9 +256,8 @@ public class AlisedaTableau{
 			hypotheses.add(h);
 		}
 //		System.out.println("leaf size: " + ln.size());
-//		
-//		
-//		// each nodes contains a set of literals.
+
+		// each nodes contains a set of literals.
 //		Iterator<TreeNode> itln = ln.iterator();
 //		while(itln.hasNext()){
 //			TreeNode leaf=itln.next();

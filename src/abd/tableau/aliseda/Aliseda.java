@@ -1,12 +1,16 @@
 package abd.tableau.aliseda;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 import abd.datastructure.graph.TreeNode;
@@ -25,29 +29,142 @@ import net.sf.tweety.logics.pl.syntax.PropositionalFormula;
 public class Aliseda {
 	protected static PlParser parser = new PlParser();
 	public static void main(String[] args) throws ParserException, IOException{
-			
+		
+		// parsing fragment
+		final Map<String, String> params = new HashMap<>();
+
+		String option = null;
+		for (int i = 0; i < args.length; i++) {
+		    final String a = args[i];
+
+		    if (a.charAt(0) == '-') {
+		        if (a.length() < 2) {
+		            System.err.println("Error at argument " + a);
+		            return;
+		        }
+
+		        option = new String();
+		        i++;
+		        option = args[i];
+		        params.put(a.substring(1), option);
+		        
+		    }
+//		    else if (option != null && option.isEmpty()) {
+//		        option = a;
+//		    }
+//		    else {
+//		        System.err.println("Illegal parameter usage");
+//		        return;
+//		    }
+		}
+		
+		
+		
+		
+		// input arguments consists of input directory, output file, number of observation literals
+		String input_file = params.get("infile");
+		if(input_file != null){
+			System.out.println("input_file: " +input_file);
+		}else
+			System.out.println("no this argument : infile");
+		String input_dir = params.get("indir");
+		if(input_dir != null){
+			System.out.println("input_dir: " +input_dir);
+		}else
+			System.out.println("no this argument : indir");
+		String output_file = params.get("output");
+		if(output_file != null){
+			System.out.println("output_file: " +output_file);
+		}else
+			System.out.println("no this argument : output");
+		String  nobs = params.get("nobs");
+		if(nobs != null){
+			int obs_num = Integer.parseInt(nobs);
+			System.out.println("obs_num: " + obs_num);
+		}else
+			System.out.println("no this argument : nobs");
+		
+		String  lobs = params.get("lobs");
+		if(lobs != null){
+			System.out.println("obs_literals: " + lobs);
+		}else
+			System.out.println("no this argument : lobs");
+		
+		
+		PropositionalFormula obs = (PropositionalFormula) parser.parseFormula(lobs);
+
+//		File folder = new File(input_dir);
+//		File[] listOfFiles = folder.listFiles();
+//
+//		for (File file : listOfFiles) {
+//		    if (file.isFile()) {
+//				String fullPath = input_dir.concat(file.getName());
+//				System.out.println(fullPath);
+//		    }
+//		}
+//		
+//
+//		// randomize the observation literals, later when iterative method is ready to test.
+//		
+//		if(input_dir != null){
+//			// get all the files in this directory
+////			
+////			String output = String.format("./result/output-%1$02d-%2$02d.txt", nb_var, nb_formulas);
+//			Writer writer = new FileWriter(output_file);
+//			int file_num = 0;
+//			float sum = 0;
+////			for(int i =2 ; i<5;i++){
+////				System.out.println(i);
+//////		    	String file = String.format("./generator/%1$02d/Data-%1$02d-%2$02d-%3$03d.txt", nb_var, nb_formulas,i);
+////				float rt = run(file, obs);
+////				writer.write(rt + "\n");
+////				sum = sum +rt;
+////		    }		
+//			
+//			for (File file : listOfFiles) {
+//			    if (file.isFile()) {
+//					String fullPath = input_dir.concat(file.getName());
+//					System.out.println(fullPath);
+//					float rt = run(fullPath, obs);
+//					writer.write(rt + "\n");
+//					sum = sum +rt;
+//					file_num++;
+//			    }
+//			}
+//			float mean = sum /file_num;
+//			// output run time and tableau size for each input and mean  as well.
+//			writer.write("mean time " + mean + "\n");
+//		    writer.close();
+//		}
+		
+        run("./generator/0930/Data-09-30-065.txt",obs);
+		
+//			//randomize the observation literals
 //			PropositionalFormula obs = (PropositionalFormula) parser.parseFormula("p2 && p4");
+//			
+//			// input arguments consists of input directory, output file, number of observation literals
 //			int nb_var = 7;
 //			int nb_formulas = 8;
 //			
 //			String output = String.format("./result/output-%1$02d-%2$02d.txt", nb_var, nb_formulas);
 //			Writer writer = new FileWriter(output);
 //			float sum = 0;
-//			for(int i =2 ; i<12;i++){
+//			for(int i =2 ; i<5;i++){
 //				System.out.println(i);
 //		    	String file = String.format("./generator/%1$02d/Data-%1$02d-%2$02d-%3$03d.txt", nb_var, nb_formulas,i);
 //				float rt = run(file, obs);
 //				writer.write(rt + "\n");
 //				sum = sum +rt;
 //		    }		
-//			float mean = sum /10;
+//			float mean = sum /3;
+//			// output run time and tableau size for each input and mean  as well.
 //			writer.write("mean time " + mean + "\n");
 //		    writer.close();
 		    
 		    
-			PropositionalFormula obs = (PropositionalFormula) parser.parseFormula("w && d");
-			String file="/home/yifan/plkb.txt";
-			float rt = run(file, obs);
+//			PropositionalFormula obs = (PropositionalFormula) parser.parseFormula("!e && f");
+//			String file="/home/yifan/plkb_sec.txt";
+//			float rt = run(file, obs);
 		    
 	}
 
@@ -108,15 +225,15 @@ public class Aliseda {
 //        Date startComputationTime = new Date();
 //        System.out.println("start");
 		
-		for(int i=0;i<leaves.size();i++){
-			AlisedaNode n = leaves.elementAt(i);
-			Vector<PropositionalFormula> lits = n.getLiterals();
-			System.out.print(i+" leaves: ");
-			for(PropositionalFormula f : lits){
-				System.out.print(f);
-			}
-			System.out.println();
-		}
+//		for(int i=0;i<leaves.size();i++){
+//			AlisedaNode n = leaves.elementAt(i);
+//			Vector<PropositionalFormula> lits = n.getLiterals();
+//			System.out.print(i+" leaves: ");
+//			for(PropositionalFormula f : lits){
+//				System.out.print(f);
+//			}
+//			System.out.println();
+//		}
 		
 //		Vector<PropositionalFormula> hyp = tab.generationHypotheses(leaves);
 //        System.out.println("end");

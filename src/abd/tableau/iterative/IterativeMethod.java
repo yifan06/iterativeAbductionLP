@@ -51,6 +51,7 @@ public static float run(String name, PropositionalFormula observation) throws Fi
 	PlParser parser = new PlParser();
 	//		String file="/home/yifan/plkb.txt";
 //	String file="/home/yifan/plkb_sec.txt";
+	
 	//		String file="/home/yifan/workspace_eclipse/iterativeTab/kbset/generator_5_5/generator9.txt";
 	String file = name;
 	PlBeliefSet kb = parser.parseBeliefBaseFromFile(file);
